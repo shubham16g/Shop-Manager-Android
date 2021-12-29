@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/countText"
+        android:fontFamily="@font/rubic_medium"
+        android:layout_width="50dp"
+        android:layout_height="32dp"
+        android:layout_toEndOf="@id/negativeButton"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:textColor="@color/white" />
+
+    <ImageButton
+        android:id="@+id/positiveButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_toEndOf="@id/countText"
+        android:background="@drawable/z_cart_neutral"
+        android:contentDescription="asd"
+        android:src="@drawable/ic_sell_add_20dp"
+        android:stateListAnimator="@null" />
+
+    <ImageButton
+        android:id="@+id/negativeButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/z_cart_neutral"
+        android:contentDescription="remove"
+        android:src="@drawable/ic_sell_remove_20dp"
+        android:stateListAnimator="@null" />
+
+    <Button
+        android:id="@+id/addButton"
+        android:paddingTop="0dp"
+        android:layout_width="114dp"
+        android:layout_height="32dp"
+        android:background="@drawable/z_cart_neutral"
+        android:fontFamily="@font/rubic_medium"
+        android:stateListAnimator="@null"
+        android:text="Add"
+        android:textColor="@color/white" />
+</RelativeLayout>

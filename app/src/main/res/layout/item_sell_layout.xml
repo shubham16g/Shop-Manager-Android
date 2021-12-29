@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="85dp">
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/outline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/product_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/textSecondary"
+        android:layout_marginEnd="20dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/rubic_regular"
+        android:gravity="center_vertical"
+        android:lines="2"
+        android:text="Product Name - 80 GRAM"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/product_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/rubic_medium"
+        android:textColor="@color/textPrimary"
+        android:textSize="16sp"
+        android:lines="1"
+        android:text="₹10.00"
+        app:layout_constraintStart_toStartOf="@+id/product_name"
+        app:layout_constraintTop_toBottomOf="@+id/product_name" />
+
+    <TextView
+        android:id="@+id/total_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:fontFamily="@font/rubic_regular"
+        android:lines="1"
+        android:text="Total:"
+        android:textColor="@color/textSecondary"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/product_amount"
+        app:layout_constraintStart_toEndOf="@+id/product_amount"
+        app:layout_constraintTop_toTopOf="@+id/product_amount" />
+
+    <TextView
+        android:id="@+id/product_total_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:fontFamily="@font/rubic_regular"
+        android:lines="1"
+        android:text="₹10.00"
+        android:textColor="@color/textSecondary"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/total_label"
+        app:layout_constraintStart_toEndOf="@+id/total_label"
+        app:layout_constraintTop_toTopOf="@+id/total_label"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/product_amount_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/rubic_regular"
+        android:lines="1"
+        android:text="₹8.90 + 6% GST"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/product_name"
+        app:layout_constraintTop_toBottomOf="@+id/product_amount" />
+
+    <com.shubhamgupta16.shopmanager.views.AddCartButton
+        android:id="@+id/add_cart_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/z_cart_neutral"
+        app:layout_constraintEnd_toEndOf="@+id/product_name"
+        app:layout_constraintTop_toBottomOf="@+id/product_name"
+        app:srcCompat="@drawable/ic_sell_add_20dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

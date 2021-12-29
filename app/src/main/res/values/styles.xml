@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="SearchViewTheme" parent="Widget.AppCompat.SearchView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/rubic_regular</item>
+    </style>
+    <!--    Theme for Form TextInputLayout-->
+    <style name="FromTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <item name="materialThemeOverlay">@style/MyThemeOverlayFilledPadding</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="hintTextColor">@color/textSecondary</item>
+    </style>
+    <style name="MyThemeOverlayFilledPadding">
+        <item name="editTextStyle">@style/MyTextInputEditText_filledBox_padding</item>
+    </style>
+    <style name="MyTextInputEditText_filledBox_padding" parent="@style/Widget.MaterialComponents.TextInputEditText.FilledBox.Dense">
+        <!-- left and right padding -->
+        <item name="android:background">@android:color/transparent</item>
+        <item name="fontFamily">@font/rubic_regular</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+
+        <!-- top and bottom padding -->
+        <item name="android:paddingTop">28dp</item>
+        <item name="android:paddingBottom">12dp</item>
+
+    </style>
+</resources>
