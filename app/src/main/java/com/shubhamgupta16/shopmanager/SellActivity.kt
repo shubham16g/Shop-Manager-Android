@@ -1,11 +1,13 @@
 package com.shubhamgupta16.shopmanager
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shubhamgupta16.shopmanager.adapter.SearchProductAdapter
 import com.shubhamgupta16.shopmanager.adapter.SellProductAdapter
@@ -16,6 +18,7 @@ import com.shubhamgupta16.shopmanager.models.SellModel
 import com.shubhamgupta16.shopmanager.room.AppDatabase.Companion.db
 import com.shubhamgupta16.shopmanager.room.ProductDao
 
+
 class SellActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySellBinding
     private lateinit var productDao: ProductDao
@@ -25,6 +28,7 @@ class SellActivity : AppCompatActivity() {
 
     private val sellList = ArrayList<SellModel>()
     private lateinit var sellProductAdapter: SellProductAdapter
+    private var query = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +46,9 @@ class SellActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let { filterSearch(it) }
+                newText?.let {
+                query = it
+                    filterSearch() }
                 return true
             }
         })
@@ -51,7 +57,8 @@ class SellActivity : AppCompatActivity() {
         setupSellRecycler()
 
         binding.billingButton.setOnClickListener {
-            Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, PrintWebActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -69,32 +76,45 @@ class SellActivity : AppCompatActivity() {
     }
 
     private fun setupSellRecycler() {
-        sellProductAdapter = SellProductAdapter(sellList){
+        sellProductAdapter = SellProductAdapter(this, sellList) {
             updateBillingButtonData()
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.addItemDecoration(
+            DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        )
         binding.recyclerView.adapter = sellProductAdapter
     }
 
-    private fun filterSearch(query: String) {
+    private fun filterSearch() {
         searchList.clear()
-        if (query.isNotEmpty()) {
-            searchList.addAll(productDao.searchProducts(query))
-        }
         searchAdapter.notifyDataSetChanged()
-        binding.searchRecyclerView.visibility = if (searchList.isEmpty())
-            View.GONE else View.VISIBLE
+        if (query.isNotEmpty()) {
+            productDao.searchProducts(query).observe(this){
+                it?.let {
+                    searchList.addAll(it)
+                    searchAdapter.notifyDataSetChanged()
+                    binding.searchRecyclerView.visibility = if (searchList.isEmpty())
+                        View.GONE else View.VISIBLE
+                }
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        filterSearch()
     }
 
     private fun setupSearchRecycler() {
-        searchAdapter = SearchProductAdapter(searchList) {
+        searchAdapter = SearchProductAdapter(this, searchList) {
             val model = sellList.firstOrNull { sellModel -> sellModel.id == it.id }
             if (model == null) {
                 sellList.add(SellModel(it.id, it.name, it.amount, it.gst))
                 sellProductAdapter.notifyItemInserted(sellList.lastIndex)
                 binding.searchView.setQuery("", false)
                 updateBillingButtonData()
-            } else{
+            } else {
                 Toast.makeText(this, "Item Already Selected!", Toast.LENGTH_SHORT).show()
             }
         }

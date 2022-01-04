@@ -6,6 +6,7 @@
         <entry key="..\:/App_Projects/ShopManager/app/src/main/res/drawable/asset_ic_search.xml" value="0.21614583333333334" />
         <entry key="..\:/App_Projects/ShopManager/app/src/main/res/drawable/ic_add_20dp.xml" value="0.21614583333333334" />
         <entry key="..\:/App_Projects/ShopManager/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.21614583333333334" />
+        <entry key="..\:/App_Projects/ShopManager/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.21614583333333334" />
         <entry key="..\:/App_Projects/ShopManager/app/src/main/res/drawable/ic_delete_20dp.xml" value="0.21614583333333334" />
         <entry key="..\:/App_Projects/ShopManager/app/src/main/res/drawable/ic_percent_24.xml" value="0.21614583333333334" />
         <entry key="..\:/App_Projects/ShopManager/app/src/main/res/drawable/ic_remove_20dp.xml" value="0.21614583333333334" />
@@ -14,11 +15,15 @@
         <entry key="..\:/App_Projects/ShopManager/app/src/main/res/layout/activity_add_product.xml" value="0.2" />
         <entry key="..\:/App_Projects/ShopManager/app/src/main/res/layout/activity_app_product.xml" value="0.25" />
         <entry key="..\:/App_Projects/ShopManager/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/App_Projects/ShopManager/app/src/main/res/layout/activity_print_web.xml" value="0.22" />
         <entry key="..\:/App_Projects/ShopManager/app/src/main/res/layout/activity_products.xml" value="0.2" />
         <entry key="..\:/App_Projects/ShopManager/app/src/main/res/layout/activity_sell.xml" value="0.22" />
         <entry key="..\:/App_Projects/ShopManager/app/src/main/res/layout/add_cart_button.xml" value="0.33" />
+        <entry key="..\:/App_Projects/ShopManager/app/src/main/res/layout/item_product_layout.xml" value="0.25" />
         <entry key="..\:/App_Projects/ShopManager/app/src/main/res/layout/item_search_layout.xml" value="0.25" />
-        <entry key="..\:/App_Projects/ShopManager/app/src/main/res/layout/item_sell_layout.xml" value="0.25" />
+        <entry key="..\:/App_Projects/ShopManager/app/src/main/res/layout/item_sell_layout.xml" value="0.22" />
+        <entry key="..\:/App_Projects/ShopManager/app/src/main/res/layout/layout_add_cart_button.xml" value="0.2" />
+        <entry key="..\:/App_Projects/ShopManager/app/src/main/res/layout/layout_edit_amount.xml" value="0.2" />
       </map>
     </option>
   </component>

@@ -35,7 +35,7 @@ class AddCartButton @JvmOverloads constructor(
     private val countText: TextView
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.add_cart_button, this, true)
+        LayoutInflater.from(context).inflate(R.layout.layout_add_cart_button, this, true)
         positiveButton = findViewById(R.id.positiveButton)
         negativeButton = findViewById(R.id.negativeButton)
         countText = findViewById(R.id.countText)

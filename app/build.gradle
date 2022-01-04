@@ -43,9 +43,16 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation group: 'com.ibm.icu', name: 'icu4j', version: '58.2'
+    implementation 'com.github.DantSu:ESCPOS-ThermalPrinter-Android:3.0.1'
+
+//    Coroutine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
 
     implementation "androidx.room:room-runtime:2.4.0"
-    kapt("androidx.room:room-compiler:2.4.0")
+    kapt "androidx.room:room-compiler:2.4.0"
+    implementation "androidx.room:room-ktx:2.4.0"
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

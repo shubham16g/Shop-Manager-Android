@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="primary">#FFBB86FC</color>
+    <color name="primaryRed">#FF8686</color>
+
+
+
+
+
+
     <color name="toolbar">#222222</color>
+    <color name="statusBar">#222222</color>
 
     <color name="textPrimary">#fafafa</color>
     <color name="textSecondary">#eaeaea</color>
     <color name="textTertiary">#cccccc</color>
     <color name="outline">#333333</color>
+
+    <color name="textPrimaryInverse">#000000</color>
 
 </resources>

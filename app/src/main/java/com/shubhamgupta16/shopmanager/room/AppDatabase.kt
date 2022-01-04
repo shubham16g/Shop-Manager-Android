@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.*
 import com.shubhamgupta16.shopmanager.models.ProductModel
 
-@Database(entities = [ProductModel::class], version = 1)
+@Database(entities = [ProductModel::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
 
@@ -12,7 +12,7 @@ abstract class AppDatabase : RoomDatabase() {
         val Context.db: AppDatabase
             get() = Room.databaseBuilder(
                 this,
-                AppDatabase::class.java, "database-name3"
-            ).allowMainThreadQueries().build()
+                AppDatabase::class.java, "database-name2"
+            ).build()
     }
 }

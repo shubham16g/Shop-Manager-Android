@@ -77,7 +77,7 @@
             android:alpha="0.9"
             android:fontFamily="@font/rubic_medium"
             android:text="Grand Total:"
-            android:textColor="@color/white"
+            android:textColor="@color/textPrimaryInverse"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -88,7 +88,7 @@
             android:layout_marginStart="5dp"
             android:fontFamily="@font/rubic_medium"
             android:text="Rs.600"
-            android:textColor="@color/white"
+            android:textColor="@color/textPrimaryInverse"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="@+id/total_label"
             app:layout_constraintStart_toEndOf="@+id/total_label"
@@ -103,7 +103,7 @@
             android:alpha="0.8"
             android:fontFamily="@font/rubic_regular"
             android:text="TextView"
-            android:textColor="@color/white"
+            android:textColor="@color/textPrimaryInverse"
             app:layout_constraintStart_toStartOf="@+id/total_label"
             app:layout_constraintTop_toBottomOf="@+id/total_label" />
 
@@ -117,7 +117,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white" />
+            app:tint="@color/textPrimaryInverse" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

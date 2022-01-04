@@ -4,7 +4,7 @@ package com.shubhamgupta16.shopmanager.models
 data class SellModel(
     val id: Int,
     val name: String,
-    val amount: Float,
+    var amount: Float,
     val gst: Float,
     var quantity: Int = 1
 ) {

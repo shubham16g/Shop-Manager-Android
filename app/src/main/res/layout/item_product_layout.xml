@@ -2,20 +2,28 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:paddingBottom="10dp"
-    android:paddingTop="8dp"
-    android:layout_height="wrap_content">
+    android:layout_height="85dp">
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/outline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
     <TextView
         android:id="@+id/product_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="20dp"
         android:ellipsize="end"
         android:fontFamily="@font/rubic_regular"
         android:gravity="center_vertical"
-        android:maxLines="2"
+        android:lines="2"
         android:text="Product Name - 80 GRAM"
         android:textColor="@color/textSecondary"
         android:textSize="16sp"
@@ -27,42 +35,14 @@
         android:id="@+id/product_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:fontFamily="@font/rubic_medium"
-        android:maxLines="1"
+        android:lines="1"
         android:text="₹10.00"
         android:textColor="@color/textPrimary"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/product_name"
         app:layout_constraintTop_toBottomOf="@+id/product_name" />
 
-    <TextView
-        android:id="@+id/total_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/rubic_regular"
-        android:lines="1"
-        android:text="Total:"
-        android:textColor="@color/textSecondary"
-        android:textSize="13sp"
-        app:layout_constraintStart_toStartOf="@+id/product_amount_info"
-        app:layout_constraintTop_toBottomOf="@+id/product_amount_info" />
-
-    <TextView
-        android:id="@+id/product_total_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:fontFamily="@font/rubic_medium"
-        android:lines="1"
-        android:text="₹10.00"
-        android:textColor="@color/textSecondary"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/total_label"
-        app:layout_constraintStart_toEndOf="@+id/total_label"
-        app:layout_constraintTop_toTopOf="@+id/total_label"
-        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/product_amount_info"
@@ -75,13 +55,26 @@
         app:layout_constraintStart_toStartOf="@+id/product_name"
         app:layout_constraintTop_toBottomOf="@+id/product_amount" />
 
-    <com.shubhamgupta16.shopmanager.views.AddCartButton
-        android:id="@+id/addCartButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
+    <ImageButton
+        android:id="@+id/delete_button"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:background="@drawable/z_cart_neutral"
+        android:backgroundTint="@color/primaryRed"
+        app:tint="@color/textPrimaryInverse"
         app:layout_constraintEnd_toEndOf="@+id/product_name"
-        app:layout_constraintTop_toTopOf="@+id/product_amount"
-        app:srcCompat="@drawable/ic_sell_add_20dp" />
+        app:layout_constraintTop_toBottomOf="@+id/product_name"
+        app:srcCompat="@drawable/ic_sell_delete_20dp" />
+
+    <ImageButton
+        android:id="@+id/edit_button"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/z_cart_neutral"
+        app:layout_constraintBottom_toBottomOf="@+id/delete_button"
+        app:layout_constraintEnd_toStartOf="@+id/delete_button"
+        app:layout_constraintTop_toTopOf="@+id/delete_button"
+        app:srcCompat="@drawable/ic_sell_edit_20dp"
+        app:tint="@color/textPrimaryInverse" />
 </androidx.constraintlayout.widget.ConstraintLayout>

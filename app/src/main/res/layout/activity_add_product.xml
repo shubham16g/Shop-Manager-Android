@@ -17,8 +17,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
-        app:title="Add Product" >
+        app:navigationIcon="@drawable/ic_baseline_arrow_back_24" >
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textPrimary"
+            android:fontFamily="@font/rubic_medium"
+            android:text="Add Product"
+            android:textSize="20sp" />
         <Button
             android:id="@+id/publish_button"
             android:layout_gravity="end"
@@ -98,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:background="@android:color/transparent"
-                    android:imeOptions="actionNext" />
+                    android:imeOptions="actionDone" />
 
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>

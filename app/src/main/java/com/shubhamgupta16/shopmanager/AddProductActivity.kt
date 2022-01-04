@@ -3,9 +3,14 @@ package com.shubhamgupta16.shopmanager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.shubhamgupta16.shopmanager.common.valueString
 import com.shubhamgupta16.shopmanager.databinding.ActivityAddProductBinding
-import com.shubhamgupta16.shopmanager.room.AppDatabase.Companion.db
 import com.shubhamgupta16.shopmanager.models.ProductModel
+import com.shubhamgupta16.shopmanager.room.AppDatabase.Companion.db
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AddProductActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddProductBinding
@@ -18,25 +23,52 @@ class AddProductActivity : AppCompatActivity() {
             onBackPressed()
         }
         binding.publishButton.setOnClickListener {
-            addProduct()
+            process()
+        }
+
+        if (intent.hasExtra("model")) {
+            changeToUpdateUI()
         }
     }
 
-    private fun addProduct() {
+    private fun changeToUpdateUI() {
+        val productModel: ProductModel = intent.getSerializableExtra("model") as ProductModel
+        binding.inputAmount.editText?.setText(productModel.amount.valueString)
+        binding.inputGst.editText?.setText(productModel.gst.valueString)
+        binding.inputName.editText?.setText(productModel.name)
+        binding.publishButton.text = getString(R.string.update)
+        binding.toolbarTitle.text = getString(R.string.update_product)
+        binding.publishButton.setOnClickListener {
+            process(productModel.id)
+        }
+    }
+
+    private fun process(productId: Int = 0) {
         val name = binding.inputName.editText?.text.toString().trim()
         val amount = binding.inputAmount.editText?.text.toString().trim()
         val gst = binding.inputGst.editText?.text.toString().trim()
 
+        val productModel = ProductModel(
+            productId, name, "", amount.toFloat(), gst.toFloat(), false, 1
+        )
+
         if (validate(name, amount, gst)) {
-            db.productDao().insert(
-                ProductModel(
-                    0, name, "", amount.toFloat(),
-                    gst.toFloat(), false, 1
-                )
-            )
-            Toast.makeText(this, "Product Added Successfully!", Toast.LENGTH_SHORT).show()
-            finish()
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val message = if (productId == 0) {
+                    db.productDao().insert(productModel)
+                    "Product Added Successfully!"
+                } else {
+                    db.productDao().update(productModel)
+                    "Product Updated Successfully!"
+                }
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@AddProductActivity, message, Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+            }
         }
+
     }
 
     private fun validate(name: String, amount: String, gst: String): Boolean {

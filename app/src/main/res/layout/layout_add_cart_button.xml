@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="wrap_content">
 
 
@@ -13,12 +14,13 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
-        android:textColor="@color/white" />
+        android:textColor="@color/textPrimaryInverse" />
 
     <ImageButton
         android:id="@+id/positiveButton"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        app:tint="@color/textPrimaryInverse"
         android:layout_toEndOf="@id/countText"
         android:background="@drawable/z_cart_neutral"
         android:contentDescription="asd"
@@ -29,6 +31,7 @@
         android:id="@+id/negativeButton"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        app:tint="@color/textPrimaryInverse"
         android:background="@drawable/z_cart_neutral"
         android:contentDescription="remove"
         android:src="@drawable/ic_sell_remove_20dp"
@@ -43,5 +46,5 @@
         android:fontFamily="@font/rubic_medium"
         android:stateListAnimator="@null"
         android:text="Add"
-        android:textColor="@color/white" />
+        android:textColor="@color/textPrimaryInverse" />
 </RelativeLayout>

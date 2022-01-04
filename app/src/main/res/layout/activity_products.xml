@@ -46,7 +46,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:src="@drawable/ic_sell_add_20dp"
-        app:tint="@color/white"
+        app:tint="@color/textPrimaryInverse"
         app:backgroundTint="@color/primary"
         android:id="@+id/fab"
         android:layout_width="wrap_content"

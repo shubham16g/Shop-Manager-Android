@@ -6,18 +6,22 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.shubhamgupta16.shopmanager.adapter.SearchProductAdapter
+import com.shubhamgupta16.shopmanager.adapter.ProductAdapter
 import com.shubhamgupta16.shopmanager.databinding.ActivityProductsBinding
 import com.shubhamgupta16.shopmanager.models.ProductModel
 import com.shubhamgupta16.shopmanager.room.AppDatabase.Companion.db
 import com.shubhamgupta16.shopmanager.room.ProductDao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ProductsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProductsBinding
     private lateinit var productDao: ProductDao
 
-    private val searchList = ArrayList<ProductModel>()
-    private lateinit var searchAdapter: SearchProductAdapter
+    private val productList = ArrayList<ProductModel>()
+    private lateinit var productAdapter: ProductAdapter
     private var query = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,30 +61,22 @@ class ProductsActivity : AppCompatActivity() {
     }
 
     private fun filterSearch() {
-        searchList.clear()
-        if (query.isNotEmpty()) {
-            searchList.addAll(productDao.searchProducts(query))
-        } else {
-            searchList.addAll(productDao.getAllProducts())
+        productList.clear()
+        val liveData = if (query.isNotEmpty()) productDao.searchProducts(query)
+        else productDao.getAllProducts()
+        liveData.observe(this) {
+            it?.let {
+                productList.addAll(it)
+                productAdapter.notifyDataSetChanged()
+                binding.recyclerView.visibility = if (productList.isEmpty())
+                    View.GONE else View.VISIBLE
+            }
         }
-        searchAdapter.notifyDataSetChanged()
-        binding.recyclerView.visibility = if (searchList.isEmpty())
-            View.GONE else View.VISIBLE
     }
 
     private fun setupSearchRecycler() {
-        searchAdapter = SearchProductAdapter(searchList) {
-            /*val model = sellList.firstOrNull { sellModel -> sellModel.id == it.id }
-            if (model == null) {
-                sellList.add(SellModel(it.id, it.name, it.amount, it.gst))
-                sellProductAdapter.notifyItemInserted(sellList.lastIndex)
-                binding.searchView.setQuery("", false)
-                updateBillingButtonData()
-            } else{
-                Toast.makeText(this, "Item Already Selected!", Toast.LENGTH_SHORT).show()
-            }*/
-        }
+        productAdapter = ProductAdapter(this, productList)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = searchAdapter
+        binding.recyclerView.adapter = productAdapter
     }
 }
