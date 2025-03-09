@@ -14,7 +14,7 @@ import com.shubhamgupta16.shopmanager.databinding.ItemSearchLayoutBinding
 import com.shubhamgupta16.shopmanager.models.ProductModel
 
 class SearchProductAdapter(
-    private val context: Context, private val list: List<ProductModel>,
+    private val context: Context, private val list: ArrayList<ProductModel>,
     private val listener: (ProductModel) -> Unit
 ) :
     RecyclerView.Adapter<SearchProductAdapter.ItemViewHolder>() {
@@ -29,15 +29,14 @@ class SearchProductAdapter(
         }
         holder.binding.root.setOnLongClickListener {
             context.alertDialogBuilder("Product Action", model.name,
-                "EDIT", { d, _ ->
+                "EDIT", { d, i ->
                     val intent = Intent(context, AddProductActivity::class.java)
                     intent.putExtra("model", model)
                     d.dismiss()
                     context.startActivity(intent)
                 }, "DELETE", { _, _ ->
                     context.showDeleteProductAlert(model) {
-//                        todo remove item
-//                        list.removeAt(position)
+                        list.removeAt(position)
                         notifyItemRemoved(position)
                         notifyItemRangeChanged(position, itemCount - position)
                     }
