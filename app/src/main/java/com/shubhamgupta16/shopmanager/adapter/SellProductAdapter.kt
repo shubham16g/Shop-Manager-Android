@@ -12,8 +12,9 @@ import com.shubhamgupta16.shopmanager.models.SellModel
 
 class SellProductAdapter(
     private val context: Context,
-    private val list: ArrayList<SellModel>,
-    private val quantityChangeListener: () -> Unit
+    private val list: List<SellModel>,
+    private val quantityChangeListener: () -> Unit,
+    private val removeItemListener: (position:Int) -> Unit
 ) :
     RecyclerView.Adapter<SellProductAdapter.ItemViewHolder>() {
 
@@ -29,9 +30,7 @@ class SellProductAdapter(
         holder.binding.addCartButton.onCountChangeListener = {
             if (it == 0) {
                 if (list.isNotEmpty()) {
-                    list.removeAt(position)
-                    notifyItemRemoved(position)
-                    quantityChangeListener()
+                    removeItemListener(position)
                 }
                 false
             } else {
@@ -67,5 +66,10 @@ class SellProductAdapter(
 
     inner class ItemViewHolder(val binding: ItemSellLayoutBinding) :
         RecyclerView.ViewHolder(binding.root)
+
+    interface OnSellItemListener{
+        fun updateQuantity(quantity:Int, position: Int)
+        fun updateAmount(amount:Double, position: Int)
+    }
 
 }

@@ -46,7 +46,7 @@ fun Context.showEditAmountDialog(
 
 fun Context.showDeleteProductAlert(productModel: ProductModel, successListener: () -> Unit) {
     alertDialogBuilder("Delete Product", "Are you sure to delete this product",
-        "YES", { d, i ->
+        "YES", { _, _ ->
             CoroutineScope(Dispatchers.IO).launch {
                 db.productDao().delete(productModel)
                 withContext(Dispatchers.Main) {
