@@ -1,6 +1,7 @@
 package com.shubhamgupta16.shopmanager.invoice
 
-import java.text.MessageFormat
+import android.os.Parcel
+import android.os.Parcelable
 import java.text.NumberFormat
 import java.util.*
 import com.ibm.icu.text.RuleBasedNumberFormat
@@ -37,8 +38,36 @@ object InvoiceMaker {
         val name: String,
         val amount: Double,
         val quantity: Int,
-        val gst: Int,
-    )
+        val gst: Double,
+    ): Parcelable {
+        constructor(parcel: Parcel) : this(
+            parcel.readString() ?: "",
+            parcel.readDouble(),
+            parcel.readInt(),
+            parcel.readDouble()
+        )
+
+        override fun writeToParcel(parcel: Parcel, flags: Int) {
+            parcel.writeString(name)
+            parcel.writeDouble(amount)
+            parcel.writeInt(quantity)
+            parcel.writeDouble(gst)
+        }
+
+        override fun describeContents(): Int {
+            return 0
+        }
+
+        companion object CREATOR : Parcelable.Creator<ProductInvoice> {
+            override fun createFromParcel(parcel: Parcel): ProductInvoice {
+                return ProductInvoice(parcel)
+            }
+
+            override fun newArray(size: Int): Array<ProductInvoice?> {
+                return arrayOfNulls(size)
+            }
+        }
+    }
 
     fun getInvoiceHtml(
         store: StoreInvoice,

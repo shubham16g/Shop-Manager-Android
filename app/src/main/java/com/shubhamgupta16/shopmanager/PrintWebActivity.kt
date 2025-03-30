@@ -2,78 +2,100 @@ package com.shubhamgupta16.shopmanager
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.print.PrintAttributes
 import android.print.PrintDocumentAdapter
 import android.print.PrintManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Button
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
+import com.shubhamgupta16.shopmanager.databinding.ActivityPrintWebBinding
 import com.shubhamgupta16.shopmanager.invoice.InvoiceMaker
 import java.util.*
 
 class PrintWebActivity : AppCompatActivity() {
-    private lateinit var printWebView: WebView
-    private lateinit var printButton: Button
+    private lateinit var binding: ActivityPrintWebBinding
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_print_web)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        toolbar.setNavigationOnClickListener { finish() }
+        enableEdgeToEdge()
+        binding = ActivityPrintWebBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(top = systemBars.top)
+            insets
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(
+                bottom = systemBars.bottom, left = systemBars.left, right = systemBars.right
+            )
+            insets
+        }
+        binding.toolbar1.setNavigationOnClickListener {
+            onBackPressed()
+        }
+        val list = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.extras?.getParcelableArrayList("list", InvoiceMaker.ProductInvoice::class.java)
+                ?: ArrayList()
+        } else {
+            @Suppress("DEPRECATION")
+            intent.extras?.getParcelableArrayList("list") ?: ArrayList()
+        }
 
-        printWebView = findViewById(R.id.printWebView)
-        printButton = findViewById(R.id.printButton)
 
-        val list = ArrayList<InvoiceMaker.ProductInvoice>()
-        list.add(InvoiceMaker.ProductInvoice("MI TV (Android) - 32 INCH", 1499.0, 1, 18))
-        list.add(InvoiceMaker.ProductInvoice("Samsung M20 8GB RAM 32 GB STORAGE", 1789.0, 1, 28))
-        list.add(InvoiceMaker.ProductInvoice("Phillips Mega 12W LED Bulb", 149.0, 4, 18))
+//        list.add(InvoiceMaker.ProductInvoice("MI TV (Android) - 32 INCH", 1499.0, 1, 18.0))
+//        list.add(InvoiceMaker.ProductInvoice("Samsung M20 8GB RAM 32 GB STORAGE", 1789.0, 1, 28.0))
+//        list.add(InvoiceMaker.ProductInvoice("Phillips Mega 12W LED Bulb", 149.0, 4, 18.0))
 
         val printCode: String = InvoiceMaker.getInvoiceHtml(
             InvoiceMaker.StoreInvoice(
-                "RK Electronics",
-                "RK Electronics",
-                "Mohansarai, Bairwan",
-                "Varanasi,",
-                "220118",
-                "Uttar Pradesh",
-                "INDIA",
-                "ashishmohansarai@gmail.com",
+                "Sore Name",
+                "Store Full Name",
+                "Address Line 1",
+                "Store City",
+                "400300",
+                "State",
+                "Country",
+                "storemail@gmail.com",
                 " IX98***********C",
                 " IX98*********4",
-                "+91 98898 71300",
-                "+91 93365 08099",
+                "+1 11119 11119",
+                "+91 22229 22229",
             ),
             InvoiceMaker.OrderInvoice(
                 "RKE/21-22/098",
                 "18/12/2021",
                 "Shubham Gupta",
-                "Madhhiya, Parao, Near Mansari Mata Temple, VARANASI, 221001",
-                "+91 93365 08099",
+                "Address Line 1, City, State, Country",
+                "+91 99999 99999",
                 "Mobile",
             ),
             list
         )
-        printWebView.settings.javaScriptEnabled = true
-        printWebView.setDesktopMode(true)
-        printWebView.loadDataWithBaseURL(
+        binding.printWebView.settings.javaScriptEnabled = true
+        binding.printWebView.setDesktopMode(true)
+        binding.printWebView.loadDataWithBaseURL(
             "file:///android_asset/",
             printCode,
             "text/html",
             "UTF-8",
             null
         )
-        printWebView.webViewClient = object : WebViewClient() {
+        binding.printWebView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
                 val printManager: PrintManager =
                     (getSystemService(Context.PRINT_SERVICE) as PrintManager?)!!
                 val adapter: PrintDocumentAdapter =
-                    printWebView.createPrintDocumentAdapter("something")
-                printButton.setOnClickListener {
+                    binding.printWebView.createPrintDocumentAdapter("something")
+                binding.printButton.setOnClickListener {
                     printManager.print(
                         "print",
                         adapter,

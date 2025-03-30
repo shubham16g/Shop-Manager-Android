@@ -5,14 +5,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shubhamgupta16.shopmanager.adapter.SearchProductAdapter
 import com.shubhamgupta16.shopmanager.adapter.SellProductAdapter
 import com.shubhamgupta16.shopmanager.common.inr
 import com.shubhamgupta16.shopmanager.databinding.ActivitySellBinding
+import com.shubhamgupta16.shopmanager.invoice.InvoiceMaker
 import com.shubhamgupta16.shopmanager.models.ProductModel
 import com.shubhamgupta16.shopmanager.models.SellModel
 import com.shubhamgupta16.shopmanager.room.AppDatabase.Companion.db
@@ -32,11 +37,24 @@ class SellActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = ActivitySellBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbar) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(top = systemBars.top)
+            insets
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(
+                bottom = systemBars.bottom, left = systemBars.left, right = systemBars.right
+            )
+            insets
+        }
         productDao = db.productDao()
 
-        binding.toolbar.setNavigationOnClickListener {
+        binding.toolbar1.setNavigationOnClickListener {
             onBackPressed()
         }
 
@@ -47,8 +65,9 @@ class SellActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText?.let {
-                query = it
-                    filterSearch() }
+                    query = it
+                    filterSearch()
+                }
                 return true
             }
         })
@@ -57,14 +76,20 @@ class SellActivity : AppCompatActivity() {
         setupSellRecycler()
 
         binding.billingButton.setOnClickListener {
+            val printList = sellList.map {
+                InvoiceMaker.ProductInvoice(
+                    it.name, it.amount.toDouble(), it.quantity, it.gst.toDouble()
+                )
+            }
             val intent = Intent(this, PrintWebActivity::class.java)
+            intent.putParcelableArrayListExtra("list", ArrayList(printList))
             startActivity(intent)
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private fun updateBillingButtonData(){
-        if (sellList.isEmpty()){
+    private fun updateBillingButtonData() {
+        if (sellList.isEmpty()) {
             binding.billingButton.visibility = View.GONE
         } else {
             val totalAmount: Double = sellList.sumOf { it.amount.toDouble() * it.quantity }
@@ -90,12 +115,12 @@ class SellActivity : AppCompatActivity() {
         searchList.clear()
         searchAdapter.notifyDataSetChanged()
         if (query.isNotEmpty()) {
-            productDao.searchProducts(query).observe(this){
+            productDao.searchProducts(query).observe(this) {
                 it?.let {
                     searchList.addAll(it)
                     searchAdapter.notifyDataSetChanged()
-                    binding.searchRecyclerView.visibility = if (searchList.isEmpty())
-                        View.GONE else View.VISIBLE
+                    binding.searchRecyclerView.visibility =
+                        if (searchList.isEmpty()) View.GONE else View.VISIBLE
                 }
             }
         }
