@@ -84,6 +84,7 @@ class ProductsActivity : AppCompatActivity() {
         else productDao.getAllProducts()
         liveData.observe(this) {
             it?.let {
+                productList.clear()
                 productList.addAll(it)
                 productAdapter.notifyDataSetChanged()
                 binding.recyclerView.visibility = if (productList.isEmpty())
